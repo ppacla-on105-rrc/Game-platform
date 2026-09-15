@@ -1,5 +1,10 @@
 import type { Review } from "../../types/Review";
 
+/**
+ * Same concept as the Lab 1.2 Solution sample that Scott sent out in Announcements for teams. 
+ * Also applies to contents for pages/GameReviews.tsx.
+ */
+
 interface GameReviewProps {
     review: Review;
 }
