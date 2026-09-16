@@ -1,5 +1,6 @@
 import { GameReviews } from "./pages/GameReviews";
-import Games from "./components/games/Games"
+import Games from "./components/games/Games";
+import "./App.css";
 
 function App() {
     return (
