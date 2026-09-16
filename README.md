@@ -1,75 +1,52 @@
-# React + TypeScript + Vite
+# Game Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Team
 
-Currently, two official plugins are available:
+**Team Name:** CTRL ALT API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Team Members
 
-## React Compiler
+- Philip Pacla-On
+- Ivan Henrich Banal
+- Abhinaya Machiraju
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project General Description
 
-## Expanding the ESLint configuration
+ Game Platform is an application inspired by platforms such as Steam, EpicGames, and others. Users will be able to 
+ browse games, view game reviews, and manage games in their personal library. The project will start with static 
+ sample data and gain more functionality in future sprints.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+ ### High-Level User Stories
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+ - As a user, I want to browse available games so that I can discover games that interest me.
+ - As a user, I want to view and leave game reviews so that I can share opinions and learn about other players' 
+ experiences. 
+ - As a user, I want to manage my personal game library so that I can keep track of my games.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+ ## Sprint 1 Contributions
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+ ### Philip Pacla-On
 
-```
+ - Created and configured the GitHub repository.
+ - Initialized the React and TypeScript project using Vite.
+ - Configured the main and develop branches and branch-protection rules.
+ - Connected and deployed the project through Vercel.
+ - Created the Games component using static sample data.
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+ ### Ivan Henrich Banal
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+ - Created the Game Reviews component.
+ - Created data, pages, and types folders for modularity. 
+ - Created static sample review data for all games. 
+ - Added usernames, ratings, and comments for each game review.
+ - Contributed to the project README and style guide documentation.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+ ### Abhinaya Machiraju
+ - Created the Game Library component using React and TypeScript.
+ - Added static sample game library data using a typed `LibraryGame` interface.
+ - Rendered the game data iteratively using `.map()`.
+ - Used unique game IDs as React keys.
+ - Organized the component with semantic HTML elements for accessibility.
+ - Tested the component using `npm run lint` and `npm run build`.
 
-```
+
