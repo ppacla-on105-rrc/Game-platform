@@ -1,5 +1,6 @@
 import type { Review } from "../types/Review";
 
+// Review data. 
 export const reviews: Review[] = [
     {
         id: 1,

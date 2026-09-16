@@ -9,6 +9,7 @@ interface GameReviewProps {
     review: Review;
 }
 
+// Will display one review. 
 export function GameReview({ review }: GameReviewProps) {
     return (
         /**

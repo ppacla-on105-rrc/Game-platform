@@ -1,6 +1,7 @@
 import { reviews } from "../data/reviews";
 import { GameReview } from "../components/game-review/GameReview";
 
+// Displays all the reviews. 
 export function GameReviews() {
     return (
         <section className="game-reviews">
