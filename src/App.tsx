@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { GameReviews } from "./pages/GameReviews";
 import Games, { type Game } from "./components/games/Games";
-import GameLibrary from "./components/game-library/GameLibrary";
+import GameLibraryPage from "./pages/GameLibraryPage";
 import { reviews } from "./data/reviews";
 import type { Review } from "./types/Review";
 import "./App.css";
@@ -39,29 +39,42 @@ function App() {
   ]);
 
   function addReview(review: Review) {
-    setReviewList((currentReviews) => [...currentReviews, review]);
+    setReviewList((currentReviews) => [
+      ...currentReviews,
+      review,
+    ]);
   }
 
   function removeReview(id: number) {
     setReviewList((currentReviews) =>
-      currentReviews.filter((review) => review.id !== id),
+      currentReviews.filter(
+        (review) => review.id !== id,
+      ),
     );
   }
 
   function addGame(game: Game) {
-    setGameList((currentGames) => [...currentGames, game]);
+    setGameList((currentGames) => [
+      ...currentGames,
+      game,
+    ]);
   }
 
   function removeGame(id: number) {
     setGameList((currentGames) =>
-      currentGames.filter((game) => game.id !== id),
+      currentGames.filter(
+        (game) => game.id !== id,
+      ),
     );
   }
 
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Navigate to="/games" replace />} />
+        <Route
+          index
+          element={<Navigate to="/games" replace />}
+        />
 
         <Route
           path="games"
@@ -85,7 +98,10 @@ function App() {
           }
         />
 
-        <Route path="game-library" element={<GameLibrary />} />
+        <Route
+          path="game-library"
+          element={<GameLibraryPage />}
+        />
       </Route>
     </Routes>
   );
