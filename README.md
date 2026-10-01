@@ -54,6 +54,13 @@
  ### Philip Pacla-On
 
  ### Ivan Henrich Banal
+ - Created the GameReviews feature page.
+ - Adding functionality to create/add new reviews and removing reviews.
+ - Added Review Form for adding game name, username, rating, and comment fields with validations.
+ - Added React Router and created routes for /games, /game-reviews, and /game-library.
+ - Created shared Layout.
+ - Added navigation interface for links to Games, Game Reviews, and Game Library.
+ - Added CSS styling for centered links, spacing between the links, and removing the underline of links.
 
  ### Abhinaya Machiraju
 
