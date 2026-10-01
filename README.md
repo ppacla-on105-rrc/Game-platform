@@ -49,4 +49,11 @@
  - Organized the component with semantic HTML elements for accessibility.
  - Tested the component using `npm run lint` and `npm run build`.
 
+## Sprint 2 Contributions
+
+ ### Philip Pacla-On
+
+ ### Ivan Henrich Banal
+
+ ### Abhinaya Machiraju
 
