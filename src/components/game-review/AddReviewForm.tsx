@@ -81,7 +81,7 @@ export function AddReviewForm({ onAddReview, nextId }: AddReviewFormProps) {
                 <option value="2">2 / 5</option>
                 <option value="3">3 / 5</option>
                 <option value="4">4 / 5</option>
-                <option value="4">5 / 5</option>
+                <option value="5">5 / 5</option>
             </select>
 
             <label htmlFor="comment">Comment (optional)</label>
