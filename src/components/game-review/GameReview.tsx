@@ -1,16 +1,12 @@
 import type { Review } from "../../types/Review";
 
-/**
- * Same concept as the Lab 1.2 Solution sample that Scott sent out in Announcements for teams. 
- * Also applies to contents for pages/GameReviews.tsx.
- */
-
 interface GameReviewProps {
     review: Review;
+    onRemove: (id: number) => void;
 }
 
 // Will display one review. 
-export function GameReview({ review }: GameReviewProps) {
+export function GameReview({ review, onRemove }: GameReviewProps) {
     return (
         /**
          * Article is used here since it groups all the information belonging to one game review together.
@@ -24,6 +20,10 @@ export function GameReview({ review }: GameReviewProps) {
             <p>Rating: {review.rating}/5</p>
 
             <p>{review.comment}</p>
+
+            <button onClick={() => onRemove(review.id)}>
+                Remove
+            </button>
         </article>
     );
 }
