@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { GameReviews } from "./pages/GameReviews";
 import Games from "./components/games/Games";
-import GameLibrary from "./components/game-library/GameLibrary";
+import GameLibraryPage from "./pages/GameLibraryPage";
 import { reviews } from "./data/reviews";
 import type { Review } from "./types/Review";
 import "./App.css";
@@ -47,7 +47,7 @@ function App() {
 
                 <Route 
                     path="game-library"
-                    element={<GameLibrary />}
+                    element={<GameLibraryPage />}
                 />
             </Route>
         </Routes>
