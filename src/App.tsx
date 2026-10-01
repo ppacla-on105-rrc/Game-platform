@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { Layout } from "./components/Layout";
 import { GameReviews } from "./pages/GameReviews";
 import Games from "./components/games/Games";
 import GameLibrary from "./components/game-library/GameLibrary";
@@ -20,18 +22,46 @@ function App() {
         setReviewList((currentReviews) => currentReviews.filter((review) => review.id !== id));
     }
     return (
-        <>
-        {/* Commented this out for testing purposes.  */}
-            <Games />
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route 
+                    index
+                    element={<Navigate to="/games" replace />} 
+                />
 
-            <GameReviews 
-                reviews={reviewList}
-                onAddReview={addReview}
-                onRemoveReview={removeReview}
-            />
+                <Route 
+                    path="games"
+                    element={<Games />}
+                />
 
-            <GameLibrary />
-        </>
+                <Route 
+                    path="game-reviews"
+                    element={
+                        <GameReviews 
+                            reviews={reviewList}
+                            onAddReview={addReview}
+                            onRemoveReview={removeReview}
+                        />
+                    }
+                />
+
+                <Route 
+                    path="game-library"
+                    element={<GameLibrary />}
+                />
+            </Route>
+        </Routes>
+        // <>
+        //     <Games />
+
+        //     <GameReviews 
+        //         reviews={reviewList}
+        //         onAddReview={addReview}
+        //         onRemoveReview={removeReview}
+        //     />
+
+        //     <GameLibrary />
+        // </>
     );
 }
 
