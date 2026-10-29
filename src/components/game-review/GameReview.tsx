@@ -1,12 +1,21 @@
 import type { Review } from "../../types/Review";
+import { useGameReview } from "../../hooks/useGameReviews";
 
 interface GameReviewProps {
     review: Review;
-    onRemove: (id: number) => void;
 }
 
+/**
+ * Sprint 3 Architecture and Revision: 
+ * This component uses useGameReviews to access the removeReview action.
+ * The hook gives the deletion to reviewService, which calls reviewRepository.
+ * The component only displays one review and responds to the user's click.
+ */
+
 // Will display one review. 
-export function GameReview({ review, onRemove }: GameReviewProps) {
+export function GameReview({ review }: GameReviewProps) {
+    const { removeReview } = useGameReview();
+
     return (
         /**
          * Article is used here since it groups all the information belonging to one game review together.
@@ -21,7 +30,7 @@ export function GameReview({ review, onRemove }: GameReviewProps) {
 
             <p>{review.comment}</p>
 
-            <button onClick={() => onRemove(review.id)}>
+            <button onClick={() => removeReview(review.id)}>
                 Remove
             </button>
         </article>

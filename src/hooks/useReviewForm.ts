@@ -1,7 +1,6 @@
 // Manages the form's input state and submission-related presentation logic.
-import { use, useState } from "react";
+import { useState } from "react";
 import { reviewService, type ReviewDraft } from "../services/reviewService";
-import type { Review } from "../types/Review";
 
 export function useReviewForm(onAddReview: (draft: ReviewDraft) => void) {
     const [game, setGame] = useState("");
