@@ -2,10 +2,12 @@
 import type { Review } from "../types/Review";
 import { reviews } from "../data/reviews";
 
+// Defines a custom TypeScript type.
 type ReviewListener = () => void;
 
 // In-memory data store initialized from the existing test data.
 let reviewStore: Review[] = [...reviews];
+// Creating an empty Set to hold listener functions (Set is similar to an array but does not contain duplicates.)
 const listeners = new Set<ReviewListener>();
 
 function notifyListeners() {
@@ -14,6 +16,7 @@ function notifyListeners() {
 
 export const reviewRepository = {
     // Subscribe to changes in the review data.
+    // Its purpose here is to register a function that should be notified whenever review data changes. 
     subscribe(listener: ReviewListener) {
         listeners.add(listener);
 
@@ -35,6 +38,7 @@ export const reviewRepository = {
     // Add a review.
     create(review: Review): Review {
         reviewStore = [...reviewStore, review];
+        
         notifyListeners();
 
         return review;
