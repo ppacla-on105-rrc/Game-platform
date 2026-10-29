@@ -1,7 +1,6 @@
 // CRUD methods and access to review test data.
 import type { Review } from "../types/Review";
 import { reviews } from "../data/reviews";
-import { subscribe } from "diagnostics_channel";
 
 type ReviewListener = () => void;
 
@@ -16,7 +15,7 @@ function notifyListeners() {
 export const reviewRepository = {
     // Subscribe to changes in the review data.
     subscribe(listener: ReviewListener) {
-        listener.add(listener);
+        listeners.add(listener);
 
         return () => {
             listeners.delete(listener);
