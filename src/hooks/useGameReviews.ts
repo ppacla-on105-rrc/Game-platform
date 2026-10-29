@@ -6,11 +6,13 @@ import { reviewService, type ReviewDraft } from "../services/reviewService";
 export function useGameReviews() {
     const [reviews, setReviews] = useState<Review[]>(() => reviewService.getReviews());
 
+    // Add a review and refresh the review list.
     function addReview(draft: ReviewDraft) {
         reviewService.addReview(draft);
         setReviews(reviewService.getReviews());
     }
 
+    // Remove a review and refresh the review list.
     function removeReview(id: number) {
         reviewService.removeReview(id);
         setReviews(reviewService.getReviews());
@@ -18,8 +20,9 @@ export function useGameReviews() {
 
     // Future implementation when adding the update feature for reviews. 
     function updatedReview(id: number, draft: ReviewDraft) {
-        return reviewService.updateReview(id, draft);
+        const result = reviewService.updateReview(id, draft);
         setReviews(reviewService.getReviews());
+        return result;
     }
 
     return {
