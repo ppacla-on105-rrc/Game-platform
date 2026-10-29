@@ -4,13 +4,9 @@ import { Layout } from "./components/Layout";
 import { GameReviews } from "./pages/GameReviews";
 import Games, { type Game } from "./components/games/Games";
 import GameLibraryPage from "./pages/GameLibraryPage";
-import { reviews } from "./data/reviews";
-import type { Review } from "./types/Review";
 import "./App.css";
 
 function App() {
-  const [reviewList, setReviewList] = useState<Review[]>(reviews);
-
   const [gameList, setGameList] = useState<Game[]>([
     {
       id: 1,
@@ -37,21 +33,6 @@ function App() {
       description: "A building and survival game made of blocks.",
     },
   ]);
-
-  function addReview(review: Review) {
-    setReviewList((currentReviews) => [
-      ...currentReviews,
-      review,
-    ]);
-  }
-
-  function removeReview(id: number) {
-    setReviewList((currentReviews) =>
-      currentReviews.filter(
-        (review) => review.id !== id,
-      ),
-    );
-  }
 
   function addGame(game: Game) {
     setGameList((currentGames) => [
@@ -87,16 +68,7 @@ function App() {
           }
         />
 
-        <Route
-          path="game-reviews"
-          element={
-            <GameReviews
-              reviews={reviewList}
-              onAddReview={addReview}
-              onRemoveReview={removeReview}
-            />
-          }
-        />
+        <Route path="game-reviews"element={<GameReviews />}/>
 
         <Route
           path="game-library"
