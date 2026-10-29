@@ -5,6 +5,13 @@ interface GameReviewProps {
     onRemove: (id: number) => void;
 }
 
+/**
+ * Sprint 3 Architecture and Revision: 
+ * This component uses useGameReviews to access the removeReview action.
+ * The hook gives the deletion to reviewService, which calls reviewRepository.
+ * The component only displays one review and responds to the user's click.
+ */
+
 // Will display one review. 
 export function GameReview({ review, onRemove }: GameReviewProps) {
     return (

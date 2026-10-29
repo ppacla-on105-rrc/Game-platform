@@ -1,58 +1,31 @@
-import { useState } from "react";
-import type { Review } from "../../types/Review";
+import { useReviewForm } from "../../hooks/useReviewForm";
+import type { ReviewDraft } from "../../services/reviewService";
 
 interface AddReviewFormProps {
-    onAddReview: (review: Review) => void;
-    nextId: number;
+    onAddReview: (draft: ReviewDraft) => void;
 }
 
-export function AddReviewForm({ onAddReview, nextId }: AddReviewFormProps) {
-    const [game, setGame] = useState("");
-    const [username, setUsername] = useState("");
-    const [rating, setRating] = useState("");
-    const [comment, setComment] = useState("");
-    const [error, setError] = useState("");
+/**
+ * Sprint 3 Architecture and Revision: 
+ * This component uses useReviewForm to manage input state and submission.
+ * The hook gives validation to reviewService, which owns the business rules.
+ * The service gives data changes to reviewRepository through useGameReviews.
+ * This keeps form presentation separate from business logic and data access.
+ */
 
-    function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        if (game.trim().length < 2) {
-            setError("Game name must be at least 2 characters.");
-            return;
-        }
-
-        if (username.trim().length < 3) {
-            setError("Username must be at least 3 characters.");
-            return;
-        }
-
-        if (!rating) {
-            setError("Please select a rating.");
-            return;
-        }
-
-        // Checks if comment is not empty and less than 10 characters.
-        if (comment.trim() !== "" && comment.trim().length < 10) {
-            setError("Comment must be at least 10 characters if entered.");
-            return;
-        }
-
-        const newReview: Review = {
-            id: nextId,
-            game: game.trim(),
-            username: username.trim(),
-            rating: Number(rating),
-            comment: comment.trim()
-        };
-
-        onAddReview(newReview);
-
-        setGame("");
-        setUsername("");
-        setRating("");
-        setComment("");
-        setError("");
-    }
+export function AddReviewForm({ onAddReview }: AddReviewFormProps) {
+    const {
+        game,
+        setGame,
+        username,
+        setUsername,
+        rating,
+        setRating,
+        comment,
+        setComment,
+        error,
+        handleSubmit
+    } = useReviewForm(onAddReview);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -91,7 +64,7 @@ export function AddReviewForm({ onAddReview, nextId }: AddReviewFormProps) {
                 onChange={(event) => setComment(event.target.value)}
             />
 
-            {error && <p>{error}</p>}
+            {error && <p role="alert">{error}</p>}
 
             <button type="submit">Add Review</button>
         </form>

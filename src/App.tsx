@@ -4,28 +4,9 @@ import { Layout } from "./components/Layout";
 import { GameReviews } from "./pages/GameReviews";
 import Games from "./components/games/Games";
 import GameLibraryPage from "./pages/GameLibraryPage";
-import { reviews } from "./data/reviews";
-import type { Review } from "./types/Review";
 import "./App.css";
 
 function App() {
-  const [reviewList, setReviewList] = useState<Review[]>(reviews);
-
-  function addReview(review: Review) {
-    setReviewList((currentReviews) => [
-      ...currentReviews,
-      review,
-    ]);
-  }
-
-  function removeReview(id: number) {
-    setReviewList((currentReviews) =>
-      currentReviews.filter(
-        (review) => review.id !== id,
-      ),
-    );
-  }
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -39,16 +20,7 @@ function App() {
           element={<Games />}
         />
 
-        <Route
-          path="game-reviews"
-          element={
-            <GameReviews
-              reviews={reviewList}
-              onAddReview={addReview}
-              onRemoveReview={removeReview}
-            />
-          }
-        />
+        <Route path="game-reviews"element={<GameReviews />}/>
 
         <Route
           path="game-library"
