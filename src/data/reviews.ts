@@ -1,6 +1,6 @@
 import type { Review } from "../types/Review";
 
-// Review data. 
+// Review data.
 export const reviews: Review[] = [
     {
         id: 1,
@@ -29,5 +29,47 @@ export const reviews: Review[] = [
         username: "NoobMaster69",
         rating: 5,
         comment: "A great sandbox game with almost unlimited possibilities for building and exploring."
+    },
+    {
+        id: 5,
+        game: "Elden Ring",
+        username: "Tarnished",
+        rating: 5,
+        comment: "Challenging boss fights and rewarding exploration make this game memorable."
+    },
+    {
+        id: 6,
+        game: "Counter-Strike 2",
+        username: "ClutchKing",
+        rating: 4,
+        comment: "The tactical gameplay rewards teamwork, precise aim, and good communication."
+    },
+    {
+        id: 7,
+        game: "Stardew Valley",
+        username: "FarmLife",
+        rating: 5,
+        comment: "A relaxing farming game with charming characters and plenty of activities."
+    },
+    {
+        id: 8,
+        game: "The Witcher 3",
+        username: "WhiteWolf",
+        rating: 5,
+        comment: "The story, side quests, and characters make exploring the world worthwhile."
+    },
+    {
+        id: 9,
+        game: "Overwatch 2",
+        username: "SupportMain",
+        rating: 3,
+        comment: "The hero abilities are fun, but matches can feel unbalanced at times."
+    },
+    {
+        id: 10,
+        game: "Cyberpunk 2077",
+        username: "NightCity",
+        rating: 4,
+        comment: "The futuristic setting and character-driven missions create an immersive experience."
     }
 ];
