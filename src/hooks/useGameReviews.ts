@@ -3,7 +3,7 @@ import { useSyncExternalStore } from "react";
 import { reviewRepository } from "../repositories/reviewRepository";
 import { reviewService, type ReviewDraft } from "../services/reviewService";
 
-export function useGameReview() {
+export function useGameReviews() {
     // Using useSyncExternalStore is useful here because the repository maintains a shared-in-memory store. 
     const reviews = useSyncExternalStore(
         reviewRepository.subscribe,

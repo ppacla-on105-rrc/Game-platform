@@ -1,45 +1,30 @@
 import { GameReview } from "../components/game-review/GameReview";
 import { AddReviewForm } from "../components/game-review/AddReviewForm";
-import type { Review } from "../types/Review";
+import { useGameReviews } from "../hooks/useGameReviews";
 
-interface GameReviewProps {
-    reviews: Review[];
-    onAddReview: (review: Review) => void;
-    onRemoveReview: (id: number) => void;
-    
-}
+/**
+ * Sprint 3 Architecture and Revision: 
+ * This page uses useGameReviews to access the shared review list and add action.
+ * The hook calls reviewService, which gives data operations to reviewRepository.
+ * The page is responsible for composing the form and review-list presentation.
+ */
 
-// Displays all the reviews. 
-export function GameReviews({ reviews, onAddReview, onRemoveReview }: GameReviewProps) {
-    /**
-     * Using ternary Operator here.
-     * reviews.length > 0 is the condition. It checks if there are any reviews. 
-     * ? is the "if true" part of the ternary operator.
-     * reviews.map goes through each review and gets its review id. 
-     * ... is the spread operator. It takes the ids from the array and spreads them out as individual
-     * arguments.
-     * Math.max() finds the largest id number, and + 1 creates the next id.
-     * : 1 is the "else" part. If there are no reviews, the id starts at 1. 
-     */
-    const nextId = reviews.length > 0 ? Math.max(...reviews.map((review) => review.id)) + 1 : 1;  
+export function GameReviews() {
+    const { reviews, addReview } = useGameReviews();
 
     return (
         <section className="game-reviews">
             <h2>Game Reviews</h2>
+            
+            <AddReviewForm onAddReview={addReview} />
 
-            <AddReviewForm 
-                onAddReview={onAddReview}
-                nextId={nextId}
-            />
-
-            {reviews.map((review) => (
-                // The key is there since React requires a unique key when rendering lists. 
-                <GameReview 
-                    key={review.id} 
-                    review={review} 
-                    onRemove={onRemoveReview}
-                />
-            ))}
+            {reviews.length === 0 ? (
+                <p>No reviews yet. Add the first review!</p>
+            ) : (
+                reviews.map((review) => (
+                    <GameReview key={review.id} review={review} />
+                ))
+            )} 
         </section>
     );
 }

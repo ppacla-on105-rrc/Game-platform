@@ -1,5 +1,5 @@
 import type { Review } from "../../types/Review";
-import { useGameReview } from "../../hooks/useGameReviews";
+import { useGameReviews } from "../../hooks/useGameReviews";
 
 interface GameReviewProps {
     review: Review;
@@ -14,7 +14,7 @@ interface GameReviewProps {
 
 // Will display one review. 
 export function GameReview({ review }: GameReviewProps) {
-    const { removeReview } = useGameReview();
+    const { removeReview } = useGameReviews();
 
     return (
         /**
