@@ -52,6 +52,12 @@
 ## Sprint 2 Contributions
 
  ### Philip Pacla-On
+ - Created the Games feature page.
+ - Added functionality to add and remove games.
+ - Added a game form with title, genre, and description fields.
+ - Added validation to prevent empty fields from being submitted.
+ - Changed the static game list into React state.
+ - Tested validation, adding games, removing games, navigation, and the production build.
 
  ### Ivan Henrich Banal
  - Created the GameReviews feature page.
@@ -63,4 +69,31 @@
  - Added CSS styling for centered links, spacing between the links, and removing the underline of links.
 
  ### Abhinaya Machiraju
+ - Created the Game Library feature page.
+ - Added functionality to add and remove games from the library.
+ - Added a Game Library form with title, genre, and status fields.
+ - Added validation to prevent empty title or genre fields from being submitted.
+ - Added a live game title preview that updates while the user types.
+ - Changed the static Game Library list into React state so the page updates immediately.
+ - Created a reusable LibraryGame type for the Game Library components.
+ - Connected the Game Library feature to the /game-library page.
+ - Tested validation, adding games, removing games, navigation, linting, and the production build.
+
+ ## Sprint 3 Contributions
+
+ ### Philip Pacla-On
+
+
+ ### Ivan Henrich Banal
+ - Created a GitHub Issues checklist outlining the team's Sprint 3 requirements and my individual Game Reviews 
+ requirements.
+ - Added the refactoring of the Game Reviews section to follow the Hook-Service-Repository architecture.
+ - Added a custom hook to manage game review state and reusable presentation logic.
+ - Added a game review service to centralize business rules and keep them separate from UI components.
+ - Added a game review repository with CRUD methods to manage review data.
+ - Added to refactor the Game Reviews components to use the new architecture instead of handling all logic directly 
+ in the components.
+
+ ### Abhinaya Machiraju
+
 
