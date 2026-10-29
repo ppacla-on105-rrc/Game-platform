@@ -10,7 +10,7 @@ import { useGameReviews } from "../hooks/useGameReviews";
  */
 
 export function GameReviews() {
-    const { reviews, addReview } = useGameReviews();
+    const { reviews, addReview, removeReview } = useGameReviews();
 
     return (
         <section className="game-reviews">
@@ -22,7 +22,11 @@ export function GameReviews() {
                 <p>No reviews yet. Add the first review!</p>
             ) : (
                 reviews.map((review) => (
-                    <GameReview key={review.id} review={review} />
+                    <GameReview 
+                        key={review.id} 
+                        review={review} 
+                        onRemove={removeReview}
+                    />
                 ))
             )} 
         </section>

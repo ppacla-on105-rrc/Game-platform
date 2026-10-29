@@ -1,8 +1,8 @@
 import type { Review } from "../../types/Review";
-import { useGameReviews } from "../../hooks/useGameReviews";
 
 interface GameReviewProps {
     review: Review;
+    onRemove: (id: number) => void;
 }
 
 /**
@@ -13,9 +13,7 @@ interface GameReviewProps {
  */
 
 // Will display one review. 
-export function GameReview({ review }: GameReviewProps) {
-    const { removeReview } = useGameReviews();
-
+export function GameReview({ review, onRemove }: GameReviewProps) {
     return (
         /**
          * Article is used here since it groups all the information belonging to one game review together.
@@ -30,7 +28,7 @@ export function GameReview({ review }: GameReviewProps) {
 
             <p>{review.comment}</p>
 
-            <button onClick={() => removeReview(review.id)}>
+            <button onClick={() => onRemove(review.id)}>
                 Remove
             </button>
         </article>

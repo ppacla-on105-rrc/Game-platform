@@ -2,6 +2,10 @@
 import type { Review } from "../types/Review";
 import { reviewRepository } from "../repositories/reviewRepository";
 
+/**
+ * Contains all properties of Review object except for id.
+ * We omit ID because the user doesn't need to provide an ID when creating a new review.
+ */
 export type ReviewDraft = Omit<Review, "id">;
 
 export const reviewService = {

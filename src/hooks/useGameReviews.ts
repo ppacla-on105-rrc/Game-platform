@@ -1,28 +1,25 @@
 // Connects the UI to the review service and manages review-list state.
-import { useSyncExternalStore } from "react";
-import { reviewRepository } from "../repositories/reviewRepository";
+import { useState } from "react";
+import type { Review } from "../types/Review";
 import { reviewService, type ReviewDraft } from "../services/reviewService";
 
 export function useGameReviews() {
-    // Using useSyncExternalStore is useful here because the repository maintains a shared-in-memory store. 
-    const reviews = useSyncExternalStore(
-        reviewRepository.subscribe,
-        // Read reviews in the browser.
-        reviewRepository.getAll, 
-        // Read reviews during server rendering.
-        reviewRepository.getAll
-    );
+    const [reviews, setReviews] = useState<Review[]>(() => reviewService.getReviews());
 
     function addReview(draft: ReviewDraft) {
-        return reviewService.addReview(draft);
+        reviewService.addReview(draft);
+        setReviews(reviewService.getReviews());
     }
 
     function removeReview(id: number) {
         reviewService.removeReview(id);
+        setReviews(reviewService.getReviews());
     }
 
+    // Future implementation when adding the update feature for reviews. 
     function updatedReview(id: number, draft: ReviewDraft) {
         return reviewService.updateReview(id, draft);
+        setReviews(reviewService.getReviews());
     }
 
     return {

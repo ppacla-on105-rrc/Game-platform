@@ -87,12 +87,14 @@
  ### Ivan Henrich Banal
  - Created a GitHub Issues checklist outlining the team's Sprint 3 requirements and my individual Game Reviews 
  requirements.
- - Added the refactoring of the Game Reviews section to follow the Hook-Service-Repository architecture.
- - Added a custom hook to manage game review state and reusable presentation logic.
- - Added a game review service to centralize business rules and keep them separate from UI components.
- - Added a game review repository with CRUD methods to manage review data.
- - Added to refactor the Game Reviews components to use the new architecture instead of handling all logic directly 
- in the components.
+ - Created a custom useGameReviews hook to manage access to the shared review list and review actions.
+ - Created a custom useReviewForm hook to separate form state and submission handling from the form component.
+ - Created reviewService.ts to centralize review validation, ID generation, and CRUD business logic.
+ - Created reviewRepository.ts to centralize review data access using the existing sample data.
+ - Refactored the Game Reviews page and related components to use the Hook-Service-Repository architecture.
+ - Added architecture comments explaining how the components use the hooks, service, and repository.
+ - Created docs/architecture-ivan-banal.md to explain the responsibilities, design decisions, and usage of the new 
+ architecture.
 
  ### Abhinaya Machiraju
 
