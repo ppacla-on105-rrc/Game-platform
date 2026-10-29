@@ -63,4 +63,12 @@
  - Added CSS styling for centered links, spacing between the links, and removing the underline of links.
 
  ### Abhinaya Machiraju
-
+- Created the Game Library feature page.
+- Added functionality to add and remove games from the library.
+- Added a Game Library form with title, genre, and status fields.
+- Added validation to prevent empty title or genre fields from being submitted.
+- Added a live game title preview that updates while the user types.
+- Changed the static Game Library list into React state so the page updates immediately.
+- Created a reusable LibraryGame type for the Game Library components.
+- Connected the Game Library feature to the /game-library page.
+- Tested validation, adding games, removing games, navigation, linting, and the production build.
