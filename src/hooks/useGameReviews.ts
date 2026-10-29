@@ -1,0 +1,1 @@
+// Connects the UI to the review service and manages review-list state.
