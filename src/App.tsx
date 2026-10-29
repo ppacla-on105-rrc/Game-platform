@@ -2,53 +2,11 @@ import { useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { GameReviews } from "./pages/GameReviews";
-import Games, { type Game } from "./components/games/Games";
+import Games from "./components/games/Games";
 import GameLibraryPage from "./pages/GameLibraryPage";
 import "./App.css";
 
 function App() {
-  const [gameList, setGameList] = useState<Game[]>([
-    {
-      id: 1,
-      title: "Valorant",
-      genre: "Tactical Shooter",
-      description: "A team-based competitive shooting game.",
-    },
-    {
-      id: 2,
-      title: "League of Legends",
-      genre: "MOBA",
-      description: "A team-based strategy game with unique champions.",
-    },
-    {
-      id: 3,
-      title: "GTA 5",
-      genre: "Action Adventure",
-      description: "An open-world action game set in Los Santos.",
-    },
-    {
-      id: 4,
-      title: "Minecraft",
-      genre: "Sandbox",
-      description: "A building and survival game made of blocks.",
-    },
-  ]);
-
-  function addGame(game: Game) {
-    setGameList((currentGames) => [
-      ...currentGames,
-      game,
-    ]);
-  }
-
-  function removeGame(id: number) {
-    setGameList((currentGames) =>
-      currentGames.filter(
-        (game) => game.id !== id,
-      ),
-    );
-  }
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -59,13 +17,7 @@ function App() {
 
         <Route
           path="games"
-          element={
-            <Games
-              games={gameList}
-              onAddGame={addGame}
-              onRemoveGame={removeGame}
-            />
-          }
+          element={<Games />}
         />
 
         <Route path="game-reviews"element={<GameReviews />}/>
