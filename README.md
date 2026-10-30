@@ -52,6 +52,12 @@
 ## Sprint 2 Contributions
 
  ### Philip Pacla-On
+ - Created the Games feature page.
+ - Added functionality to add and remove games.
+ - Added a game form with title, genre, and description fields.
+ - Added validation to prevent empty fields from being submitted.
+ - Changed the static game list into React state.
+ - Tested validation, adding games, removing games, navigation, and the production build.
 
  ### Ivan Henrich Banal
  - Created the GameReviews feature page.

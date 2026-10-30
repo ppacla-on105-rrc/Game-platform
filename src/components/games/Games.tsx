@@ -1,50 +1,25 @@
 import { useState, type FormEvent } from "react";
+import { useGames } from "../../hooks/useGames";
 
-export interface Game {
-  id: number;
-  title: string;
-  genre: string;
-  description: string;
-}
+function Games() {
+  const { games, error, addGame, removeGame } = useGames();
 
-interface GamesProps {
-  games: Game[];
-  onAddGame: (game: Game) => void;
-  onRemoveGame: (id: number) => void;
-}
-
-function Games({ games, onAddGame, onRemoveGame }: GamesProps) {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [description, setDescription] = useState("");
-  const [error, setError] = useState("");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!title.trim() || !genre.trim() || !description.trim()) {
-      setError("Please complete all fields.");
+    const gameWasAdded = addGame(title, genre, description);
+
+    if (!gameWasAdded) {
       return;
     }
-
-    setError("");
-
-    const newGame: Game = {
-      id: Date.now(),
-      title: title.trim(),
-      genre: genre.trim(),
-      description: description.trim(),
-    };
-
-    onAddGame(newGame);
 
     setTitle("");
     setGenre("");
     setDescription("");
-  }
-
-  function handleRemove(id: number) {
-    onRemoveGame(id);
   }
 
   return (
@@ -93,7 +68,7 @@ function Games({ games, onAddGame, onRemoveGame }: GamesProps) {
             <p>Genre: {game.genre}</p>
             <p>{game.description}</p>
 
-            <button type="button" onClick={() => handleRemove(game.id)}>
+            <button type="button" onClick={() => removeGame(game.id)}>
               Remove
             </button>
           </article>
