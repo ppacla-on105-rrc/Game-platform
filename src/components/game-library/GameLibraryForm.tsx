@@ -1,15 +1,24 @@
+
 import { useState } from "react";
-import type { LibraryGame } from "../../types/LibraryGame";
 
 interface GameLibraryFormProps {
-  games: LibraryGame[];
-  setGames: (games: LibraryGame[]) => void;
+  onAddGame: (
+    title: string,
+    genre: string,
+    status: string
+  ) => string;
 }
 
-function GameLibraryForm({
-  games,
-  setGames,
-}: GameLibraryFormProps) {
+/**
+ * GameLibraryForm collects information for a new game.
+ *
+ * The component manages the input fields and displays errors.
+ * It calls onAddGame, which uses the custom hook and service
+ * to validate and add games through the repository.
+ *
+ * This keeps business logic and data access out of the form.
+ */
+function GameLibraryForm({ onAddGame }: GameLibraryFormProps) {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [status, setStatus] = useState("Not Installed");
@@ -18,20 +27,15 @@ function GameLibraryForm({
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (title.trim() === "" || genre.trim() === "") {
-      setError("Please enter a game title and genre.");
+    // The service checks the required fields and duplicate games.
+    const result = onAddGame(title, genre, status);
+
+    if (result !== "Game added successfully.") {
+      setError(result);
       return;
     }
 
-    const newGame: LibraryGame = {
-      id: Date.now(),
-      title: title,
-      genre: genre,
-      status: status,
-    };
-
-    setGames([...games, newGame]);
-
+    // Clear the form after a successful addition.
     setTitle("");
     setGenre("");
     setStatus("Not Installed");
@@ -45,7 +49,6 @@ function GameLibraryForm({
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="game-title">Game Title</label>
-
           <input
             id="game-title"
             type="text"
@@ -56,7 +59,6 @@ function GameLibraryForm({
 
         <div>
           <label htmlFor="game-genre">Genre</label>
-
           <input
             id="game-genre"
             type="text"
@@ -67,7 +69,6 @@ function GameLibraryForm({
 
         <div>
           <label htmlFor="game-status">Status</label>
-
           <select
             id="game-status"
             value={status}
@@ -78,7 +79,7 @@ function GameLibraryForm({
           </select>
         </div>
 
-        {error && <p>{error}</p>}
+        {error && <p role="alert">{error}</p>}
 
         <button type="submit">Add Game</button>
       </form>

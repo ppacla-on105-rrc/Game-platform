@@ -1,57 +1,32 @@
-import { useState } from "react";
+
 import GameLibrary from "../components/game-library/GameLibrary";
 import GameLibraryForm from "../components/game-library/GameLibraryForm";
-import type { LibraryGame } from "../types/LibraryGame";
+import { useGameLibrary } from "../hooks/useGameLibrary";
 
+/**
+ * GameLibraryPage displays the user's collection of games.
+ *
+ * It uses the useGameLibrary hook to manage the game list
+ * and handle actions such as adding and removing games.
+ *
+ * The hook calls the service for business rules, and the
+ * service uses the repository to access the test data.
+ *
+ * This keeps business logic and data access out of the page.
+ */
 function GameLibraryPage() {
-  const [games, setGames] = useState<LibraryGame[]>([
-    {
-      id: 1,
-      title: "Stardew Valley",
-      genre: "Simulation",
-      status: "Installed",
-    },
-    {
-      id: 2,
-      title: "Hades",
-      genre: "Action",
-      status: "Installed",
-    },
-    {
-      id: 3,
-      title: "Terraria",
-      genre: "Adventure",
-      status: "Not Installed",
-    },
-    {
-      id: 4,
-      title: "Hollow Knight",
-      genre: "Metroidvania",
-      status: "Installed",
-    },
-  ]);
-
-  function removeGame(id: number) {
-    const updatedGames = games.filter(
-      (game) => game.id !== id
-    );
-
-    setGames(updatedGames);
-  }
-
+  const { message, addGame } = useGameLibrary();
   return (
     <main>
       <h1>Game Library</h1>
 
+      {message && <p>{message}</p>}
+
       <GameLibraryForm
-        games={games}
-        setGames={setGames}
+        onAddGame={addGame}
       />
 
-      <GameLibrary
-        games={games}
-        onRemove={removeGame}
-      />
+      <GameLibrary/>
     </main>
   );
 }
