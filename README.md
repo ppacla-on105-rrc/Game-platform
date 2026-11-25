@@ -78,3 +78,43 @@
 - Created a reusable LibraryGame type for the Game Library components.
 - Connected the Game Library feature to the /game-library page.
 - Tested validation, adding games, removing games, navigation, linting, and the production build.
+
+## Sprint 4 - How to Run the Project
+
+I separated the project into two folders:
+- `frontend` has our React and TypeScript code.
+- `backend` has our Express and TypeScript code.
+
+Both are managed using npm workspaces. Run these commands from the main project folder.
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run the frontend
+
+```bash
+npm run dev:frontend
+```
+
+Open the link shown in the terminal, usually http://localhost:5173.
+
+### Run the backend
+
+Open another terminal and run:
+
+```bash
+npm run dev:backend
+```
+
+Go to http://localhost:3000/health to check if the backend is working.
+
+### Build both apps
+
+```bash
+npm run build
+```
+
+Right now the backend only has a health check. We still need to add the database connection and routes for our features.
