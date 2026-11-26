@@ -1,3 +1,4 @@
+// Manages creating a new review. 
 import { useReviewForm } from "../../hooks/useReviewForm";
 import type { ReviewDraft } from "../../services/reviewService";
 

@@ -1,3 +1,4 @@
+// Manages editing an exisiting review. 
 import { useState } from "react";
 import type { Review } from "../../types/Review";
 import { reviewService, type ReviewDraft } from "../../services/reviewService";
