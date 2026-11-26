@@ -2,7 +2,7 @@ import type { Review } from "../../types/Review";
 
 interface GameReviewProps {
     review: Review;
-    onRemove: (id: number) => void;
+    onRemove: (id: number) => Promise<void>;
 }
 
 /**
