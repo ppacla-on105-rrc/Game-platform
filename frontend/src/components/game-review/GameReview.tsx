@@ -24,7 +24,7 @@ export function GameReview({ review, onRemove, onUpdate }: GameReviewProps) {
     const [comment, setComment] = useState(review.comment);
     const [error, setError] = useState("");
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const draft: ReviewDraft = {
