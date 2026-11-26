@@ -2,7 +2,7 @@ import { useReviewForm } from "../../hooks/useReviewForm";
 import type { ReviewDraft } from "../../services/reviewService";
 
 interface AddReviewFormProps {
-    onAddReview: (draft: ReviewDraft) => void;
+    onAddReview: (draft: ReviewDraft) => Promise<void>;
 }
 
 /**
