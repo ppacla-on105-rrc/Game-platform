@@ -121,6 +121,14 @@
 ## Sprint 4 Contributions
  ### Philip Pacla-On
  ### Ivan Henrich Banal
+ - Converted the Game Reviews feature from front-end only storage to a full-stack implementation.
+ - Created an Express back-end API using TypeScript.
+ - Integrated PostgreSQL using Docker Compose.
+ - Configured Prisma ORM and database migrations.
+ - Created the Review database model and table.
+ - Implemented back-end routes, controllers, services, repositories, and validation.
+ - Connected the React front-end to the back-end API for Create, Read, Update, and Delete operations.
+ - Tested API functionality, database persistence, and front-end integration. 
  ### Abhinaya Machiraju
 
 ## Sprint 4 - How to Run the Project
