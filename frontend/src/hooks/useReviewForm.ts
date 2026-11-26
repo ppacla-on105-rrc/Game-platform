@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { reviewService, type ReviewDraft } from "../services/reviewService";
 
-export function useReviewForm(onAddReview: (draft: ReviewDraft) => void) {
+export function useReviewForm(onAddReview: (draft: ReviewDraft) => Promise<void>) {
     const [game, setGame] = useState("");
     const [username, setUsername] = useState("");
     const [rating, setRating] = useState("");
@@ -17,7 +17,7 @@ export function useReviewForm(onAddReview: (draft: ReviewDraft) => void) {
         setError("");
     }
 
-    function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const draft: ReviewDraft = {
@@ -35,7 +35,7 @@ export function useReviewForm(onAddReview: (draft: ReviewDraft) => void) {
         }
 
         try {
-            onAddReview(draft);
+            await onAddReview(draft);
             resetForm();
         } catch (caughtError) {
             setError(
