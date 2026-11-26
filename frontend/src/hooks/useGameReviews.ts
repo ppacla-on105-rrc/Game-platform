@@ -41,6 +41,7 @@ export function useGameReviews() {
         const updateReview = await reviewService.updateReview(id, draft);
 
         const data = await reviewService.getReviews();
+        setReviews(data);
 
         return updateReview;
     }
