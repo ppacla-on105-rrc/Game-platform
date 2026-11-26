@@ -1,3 +1,4 @@
+// The page that displays the review form and review list. It uses the useGameReviews custom hook.
 import { GameReview } from "../components/game-review/GameReview";
 import { AddReviewForm } from "../components/game-review/AddReviewForm";
 import { useGameReviews } from "../hooks/useGameReviews";
@@ -10,15 +11,25 @@ import { useGameReviews } from "../hooks/useGameReviews";
  */
 
 export function GameReviews() {
-    const { reviews, addReview, removeReview } = useGameReviews();
+    const { 
+        reviews, 
+        loading, 
+        error,
+        addReview,
+        updateReview,
+        removeReview,
+    } = useGameReviews();
 
     return (
         <section className="game-reviews">
             <h2>Game Reviews</h2>
             
             <AddReviewForm onAddReview={addReview} />
-
-            {reviews.length === 0 ? (
+            {loading ? (
+                <p>Loading reviews...</p>
+            ) : error ? (
+                <p role="alert">{error}</p>
+            ) : reviews.length === 0 ? (
                 <p>No reviews yet. Add the first review!</p>
             ) : (
                 reviews.map((review) => (
@@ -26,9 +37,10 @@ export function GameReviews() {
                         key={review.id} 
                         review={review} 
                         onRemove={removeReview}
+                        onUpdate={updateReview}
                     />
-                ))
-            )} 
+                ))           
+            )}
         </section>
     );
 }

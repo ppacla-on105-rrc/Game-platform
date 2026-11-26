@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// id is the primary key.
+// It automatically increments when a new review is created.
+// The other fields store the review information.
+// Prisma maps this model to a PostgreSQL table.
+// Used Prisma migrations to create and manage the database structure.
+// The review model does not have a foreign key or relationships to other tables.
+// Review table is currently a standalone model.
+// No foreign keys because game names and usernames are stored directly in the review. 
+// rather than referencing separate Game or User tables.
+model Review {
+  id       Int    @id @default(autoincrement()) 
+  game     String
+  username String
+  rating   Int
+  comment  String
+}

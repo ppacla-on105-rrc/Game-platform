@@ -69,15 +69,67 @@
  - Added CSS styling for centered links, spacing between the links, and removing the underline of links.
 
  ### Abhinaya Machiraju
-- Created the Game Library feature page.
-- Added functionality to add and remove games from the library.
-- Added a Game Library form with title, genre, and status fields.
-- Added validation to prevent empty title or genre fields from being submitted.
-- Added a live game title preview that updates while the user types.
-- Changed the static Game Library list into React state so the page updates immediately.
-- Created a reusable LibraryGame type for the Game Library components.
-- Connected the Game Library feature to the /game-library page.
-- Tested validation, adding games, removing games, navigation, linting, and the production build.
+ - Created the Game Library feature page.
+ - Added functionality to add and remove games from the library.
+ - Added a Game Library form with title, genre, and status fields.
+ - Added validation to prevent empty title or genre fields from being submitted.
+ - Added a live game title preview that updates while the user types.
+ - Changed the static Game Library list into React state so the page updates immediately.
+ - Created a reusable LibraryGame type for the Game Library components.
+ - Connected the Game Library feature to the /game-library page.
+ - Tested validation, adding games, removing games, navigation, linting, and the production build.
+
+## Sprint 3 Contributions
+
+ ### Philip Pacla-On
+ - Created a GitHub Issues checklist outlining my individual Games requirements for Sprint 3
+ - Created the Game TypeScript type and added ten sample Game objects for test data
+ - Created a Games repository containing the create, read, update, and delete methods used to access and modify the game data
+ - Created gameservice.ts to manage game validation, ID generation, and other business logic
+ - Created a custom usegames hook to manage the Games list, error state, and the add and remove actions used by the page.
+ - Refactored the Games component to use the hook service repository architecture
+ - Added an architecture comment explaining how the Games component uses the hook, service, and repository
+ - Created doc/artchitecture-pp.md  to explain the responsibilities, design decisions, and usage of the Games architecture
+ - Tested the Games page by viewing, adding, and removing games and confirmed the application builds successfully
+
+ ### Ivan Henrich Banal
+ - Created a GitHub Issues checklist outlining the team's Sprint 3 requirements and my individual Game Reviews 
+ requirements.
+ - Created a custom useGameReviews hook to manage access to the shared review list and review actions.
+ - Created a custom useReviewForm hook to separate form state and submission handling from the form component.
+ - Created reviewService.ts to centralize review validation, ID generation, and CRUD business logic.
+ - Created reviewRepository.ts to centralize review data access using the existing sample data.
+ - Refactored the Game Reviews page and related components to use the Hook-Service-Repository architecture.
+ - Added architecture comments explaining how the components use the hooks, service, and repository.
+ - Created docs/architecture-ivan-banal.md to explain the responsibilities, design decisions, and usage of the new 
+ architecture.
+
+ ### Abhinaya Machiraju
+ - Created a separate GitHub feature branch for my Sprint 3 Game Library work.
+ - Created `libraryGames.ts` containing ten sample games using the existing `LibraryGame` TypeScript type.
+ - Created `gameLibraryRepo.ts` with CRUD methods to add, retrieve, update, and remove games from the library.
+ - Created `gameLibraryService.ts` to manage business logic, including form validation, duplicate game checking, ID generation, and    updating game statuses.
+ - Created a custom `useGameLibrary` hook to manage the shared game list, feedback messages, and add, remove, and update actions.
+ - Refactored `GameLibraryPage.tsx` to use the custom hook instead of managing the game list directly with local React state.
+ - Updated `GameLibraryForm.tsx` to use the hook's add-game functionality while keeping the existing form fields, validation feedback, and live game title preview.
+ - Refactored `GameLibrary.tsx` to use the custom hook for displaying and removing games without passing the game list through props.
+ - Added architecture comments explaining how the Game Library components use the hook, service, and repository.
+ - Created `docs/architecture-am.md` to document the responsibilities, design decisions, and usage of the Game Library architecture.
+ - Tested the Game Library page, including adding games, removing games, and preventing duplicate game entries. Confirmed that `npm run build` and `npm run lint` completed successfully.
+ - Organized my Git changes into individual commits for each created or modified file.
+
+## Sprint 4 Contributions
+ ### Philip Pacla-On
+ ### Ivan Henrich Banal
+ - Converted the Game Reviews feature from front-end only storage to a full-stack implementation.
+ - Created an Express back-end API using TypeScript.
+ - Integrated PostgreSQL using Docker Compose.
+ - Configured Prisma ORM and database migrations.
+ - Created the Review database model and table.
+ - Implemented back-end routes, controllers, services, repositories, and validation.
+ - Connected the React front-end to the back-end API for Create, Read, Update, and Delete operations.
+ - Tested API functionality, database persistence, and front-end integration. 
+ ### Abhinaya Machiraju
 
 ## Sprint 4 - How to Run the Project
 
