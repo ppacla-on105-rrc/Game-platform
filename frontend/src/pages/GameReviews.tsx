@@ -15,6 +15,7 @@ export function GameReviews() {
         loading, 
         error,
         addReview,
+        updateReview,
         removeReview,
     } = useGameReviews();
 
@@ -35,6 +36,7 @@ export function GameReviews() {
                         key={review.id} 
                         review={review} 
                         onRemove={removeReview}
+                        onUpdate={updateReview}
                     />
                 ))           
             )}
