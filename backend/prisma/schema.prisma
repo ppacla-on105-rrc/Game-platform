@@ -13,8 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// id is the primary key.
+// It automatically increments when a new review is created.
+// The other fields store the review information.
+// Prisma maps this model to a PostgreSQL table.
+// Used Prisma migrations to create and manage the database structure.
+// The review model does not have a foreign key or relationships to other tables.
+// Review table is currently a standalone model.
+// No foreign keys because game names and usernames are stored directly in the review. 
+// rather than referencing separate Game or User tables.
 model Review {
-  id       Int    @id @default(autoincrement())
+  id       Int    @id @default(autoincrement()) 
   game     String
   username String
   rating   Int

@@ -1,4 +1,4 @@
-// Connects the UI to the review service and manages review-list state.
+// This hook manages the review state and handles asynchronous operations
 import { useEffect, useState } from "react";
 import type { Review } from "../types/Review";
 import { reviewService, type ReviewDraft } from "../services/reviewService";

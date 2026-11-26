@@ -1,3 +1,4 @@
+// Defines the API endpoints.
 import { Router } from "express";
 import { 
     getReviews, 

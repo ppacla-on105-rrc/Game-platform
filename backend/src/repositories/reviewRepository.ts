@@ -1,3 +1,4 @@
+// Uses Prisma to communicate with PostgreSQL.
 import { prisma } from "../lib/prisma.js";
 
 // Information required to create or update a review.

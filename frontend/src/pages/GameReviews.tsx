@@ -1,3 +1,4 @@
+// The page that displays the review form and review list. It uses the useGameReviews custom hook.
 import { GameReview } from "../components/game-review/GameReview";
 import { AddReviewForm } from "../components/game-review/AddReviewForm";
 import { useGameReviews } from "../hooks/useGameReviews";

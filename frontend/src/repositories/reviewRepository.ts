@@ -1,4 +1,4 @@
-// CRUD methods and access to review test data.
+// This repository uses fetch() to communicate with the back-end API.
 import type { Review } from "../types/Review";
 
 const API_URL = "http://localhost:3000/api/reviews";

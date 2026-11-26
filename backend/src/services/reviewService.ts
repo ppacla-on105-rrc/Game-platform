@@ -1,3 +1,4 @@
+// Contains validation and business logic. 
 import { Review } from "@prisma/client";
 import { reviewRepository } from "../repositories/reviewRepository.js";
 

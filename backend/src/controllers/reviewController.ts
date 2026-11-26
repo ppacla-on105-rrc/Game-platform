@@ -1,3 +1,4 @@
+// Handles incoming HTTP requests and responses.
 import type { Request, Response } from "express";
 import { reviewService } from "../services/reviewService.js";
 
