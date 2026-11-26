@@ -77,7 +77,7 @@ export const updateReview = async (req: Request, res: Response) => {
 };
 
 // DELETE /api/reviews/:id.
-export const deleteReviews = async (req: Request, res: Response) => {
+export const deleteReview = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id);
 
