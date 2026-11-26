@@ -10,15 +10,24 @@ import { useGameReviews } from "../hooks/useGameReviews";
  */
 
 export function GameReviews() {
-    const { reviews, addReview, removeReview } = useGameReviews();
+    const { 
+        reviews, 
+        loading, 
+        error,
+        addReview,
+        removeReview,
+    } = useGameReviews();
 
     return (
         <section className="game-reviews">
             <h2>Game Reviews</h2>
             
             <AddReviewForm onAddReview={addReview} />
-
-            {reviews.length === 0 ? (
+            {loading ? (
+                <p>Loading reviews...</p>
+            ) : error ? (
+                <p role="alert">{error}</p>
+            ) : reviews.length === 0 ? (
                 <p>No reviews yet. Add the first review!</p>
             ) : (
                 reviews.map((review) => (
@@ -27,8 +36,8 @@ export function GameReviews() {
                         review={review} 
                         onRemove={removeReview}
                     />
-                ))
-            )} 
+                ))           
+            )}
         </section>
     );
 }
