@@ -37,13 +37,13 @@ export const reviewService = {
         return null;
     },
 
-    // Get all reviews through the repository.
-    getReviews(): Review[] {
+    // Retrieve all reviews.
+    async getReviews(): Promise<Review[]> {
         return reviewRepository.getAll();
     },
 
-    // Create a validated review with a unique next ID.
-    addReview(draft: ReviewDraft): Review {
+    // Add a review.
+    async addReview(draft: ReviewDraft): Promise<Review> {
         // Using this. here because validateReview is not a separate function, but instead a method of the same object.
         const error = this.validateReview(draft);
 
@@ -51,53 +51,32 @@ export const reviewService = {
             throw new Error(error);
         }
 
-        const currentReviews = reviewRepository.getAll();
-        const nextId = 
-            currentReviews.length > 0 
-                ? Math.max(...currentReviews.map((review) => review.id)) + 1 : 1;
-        
-        const newReview: Review = {
-            id: nextId,
+        return reviewRepository.create({
             game: draft.game.trim(),
             username: draft.username.trim(),
             rating: draft.rating,
             comment: draft.comment.trim()
-        };
-
-        return reviewRepository.create(newReview);
+        });
     },
 
-    // Update a validated review.
-    updateReview(id: number, draft: ReviewDraft): Review {
+    // Update an existing review.
+    async updateReview(id: number, draft: ReviewDraft): Promise<Review> {
         const error = this.validateReview(draft);
 
         if (error) {
             throw new Error(error);
         }
 
-        const updatedReview: Review = {
-            id,
+        return reviewRepository.update(id, {
             game: draft.game.trim(),
             username: draft.username.trim(),
             rating: draft.rating,
             comment: draft.comment.trim()
-        };
-
-        const result = reviewRepository.update(id, updatedReview);
-
-        if (!result) {
-            throw new Error("Review not found.");
-        }
-
-        return result;
+        });
     },
 
     // Delete a review.
-    removeReview(id: number): void {
-        const deleted = reviewRepository.delete(id);
-
-        if (!deleted) {
-            throw new Error("Review not found.");
-        }
+    async removeReview(id: number): Promise<void> {
+        await reviewRepository.delete(id);
     }
 };

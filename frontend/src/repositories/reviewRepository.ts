@@ -1,53 +1,74 @@
-// CRUD methods and access to review test data.
+// This repository uses fetch() to communicate with the back-end API.
 import type { Review } from "../types/Review";
-import { reviews } from "../data/reviews";
 
-// In-memory data store initialized from the existing test data.
-let reviewStore: Review[] = [...reviews];
+const API_URL = "http://localhost:3000/api/reviews";
+
+// Handle unsuccessful API responses.
+const hanldeResponse = async (response: Response) => {
+    if (!response.ok) {
+        const error = await response.json().catch(() => null);
+
+        throw new Error(
+            error?.message ?? "Something went wrong with the Review API."
+        );
+    }
+};
 
 export const reviewRepository = {
-    // Read all reviews.
-    getAll(): Review[] {
-        return [...reviewStore];
+    // Retrieve all reviews.
+    async getAll(): Promise<Review[]> {
+        const response = await fetch(API_URL);
+
+        await hanldeResponse(response);
+
+        return response.json();
     },
 
-    // Read one review by ID.
-    getById(id: number): Review | undefined {
-        return reviewStore.find((review) => review.id === id);
+    // Retrieve one review by ID.
+    async getById(id: number): Promise<Review> {
+        const response = await fetch(`${API_URL}/${id}`);
+
+        await hanldeResponse(response);
+
+        return response.json(); 
     },
 
-    // Add a review.
-    create(review: Review): Review {
-        reviewStore = [...reviewStore, review];
+    // Create a review.
+    async create(review: Omit<Review, "id">): Promise<Review> {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(review)
+        });
 
-        return review;
+        await hanldeResponse(response);
+
+        return response.json();
     },
 
-    // Update an existing review.
-    update(id: number, updatedReview: Review): Review | undefined {
-        const exists = reviewStore.some((review) => review.id === id);
+    // Update a review.
+    async update(id: number, updatedReview: Omit<Review, "id">): Promise<Review> {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedReview)
+        });
 
-        if (!exists) {
-            return undefined;
-        }
+        await hanldeResponse(response);
 
-        reviewStore = reviewStore.map((review) => 
-            review.id === id ? updatedReview : review
-        );
-
-        return updatedReview;
+        return response.json();
     },
 
-    // Remove a review by ID.
-    delete(id: number): boolean {
-        const exists = reviewStore.some((review) => review.id === id);
+    // Delete a review..
+    async delete(id: number): Promise<void> {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE"
+        });
 
-        if (!exists) {
-            return false;
-        }
-
-        reviewStore = reviewStore.filter((review) => review.id !== id);
-
-        return true;
+        await hanldeResponse(response);
     }
 };
