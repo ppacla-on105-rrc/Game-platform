@@ -1,34 +1,64 @@
 // Connects the UI to the review service and manages review-list state.
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Review } from "../types/Review";
 import { reviewService, type ReviewDraft } from "../services/reviewService";
 
 export function useGameReviews() {
-    const [reviews, setReviews] = useState<Review[]>(() => reviewService.getReviews());
+    const [reviews, setReviews] = useState<Review[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    // Add a review and refresh the review list.
-    function addReview(draft: ReviewDraft) {
-        reviewService.addReview(draft);
-        setReviews(reviewService.getReviews());
+    // Load reviews from the back-end.
+    useEffect(() => {
+        const loadReviews = async () => {
+            try {
+                const data = await reviewService.getReviews();
+                setReviews(data);
+            } catch (error) {
+                setError(
+                    error instanceof Error
+                    ? error.message
+                    : "Failed to load reviews."
+                );
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        void loadReviews();
+    }, []);
+
+    // Add a review.
+    async function addReview(draft: ReviewDraft) {
+        await reviewService.addReview(draft);
+
+        const data = await reviewService.getReviews();
+        setReviews(data);
     }
 
-    // Remove a review and refresh the review list.
-    function removeReview(id: number) {
-        reviewService.removeReview(id);
-        setReviews(reviewService.getReviews());
+    // Update a review.
+    async function updateReview(id: number, draft: ReviewDraft) {
+        const updateReview = await reviewService.updateReview(id, draft);
+
+        const data = await reviewService.getReviews();
+
+        return updateReview;
     }
 
-    // Future implementation when adding the update feature for reviews. 
-    function updatedReview(id: number, draft: ReviewDraft) {
-        const result = reviewService.updateReview(id, draft);
-        setReviews(reviewService.getReviews());
-        return result;
+    // Delete a review.
+    async function removeReview(id: number) {
+        await reviewService.removeReview(id);
+
+        const data = await reviewService.getReviews();
+        setReviews(data);
     }
 
     return {
         reviews,
+        loading,
+        error,
         addReview,
-        removeReview,
-        updatedReview
+        updateReview,
+        removeReview
     };
 }
