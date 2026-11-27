@@ -2,6 +2,7 @@
 import express from "express";
 import cors from "cors";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import gameRoutes from "./routes/gameRoutes.js";
 
 
 const app = express();
@@ -32,6 +33,8 @@ app.get("/health", (_req, res) => {
 
 // Register Review routes.
 app.use("/api", reviewRoutes);
+
+app.use("/api/games", gameRoutes);
 
 app.listen(port, () => {
   console.log(`Backend running at http://localhost:${port}`);

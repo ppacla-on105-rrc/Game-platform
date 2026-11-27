@@ -1,55 +1,58 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Game } from "../types/Game";
 import { gamesService } from "../services/gamesService";
 
-/**
- * Provides presentation state and actions for displaying and modifying games
- *
- * Returned values:
- * games: Current games now displayed by the component
- * error: Validation or operation message displayed to the user
- * addGame: Adds a validated game and refreshes the displayed list
- * removeGame: Removes a game and refreshes the displayed list
- */
+function errorMessage(error: unknown, fallback: string): string {
+  return error instanceof Error ? error.message : fallback;
+}
+
 export function useGames() {
-  const [games, setGames] = useState<Game[]>(() =>
-    gamesService.getAllGames(),
-  );
+  const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
 
-  function refreshGames() {
-    setGames(gamesService.getAllGames());
-  }
+  useEffect(() => {
+    let active = true;
 
-  function addGame(
+    gamesService.getAllGames()
+      .then((loadedGames) => {
+        if (active) setGames(loadedGames);
+      })
+      .catch((error: unknown) => {
+        if (active) setError(errorMessage(error, "Unable to load games."));
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  async function addGame(
     title: string,
     genre: string,
     description: string,
-  ): boolean {
+  ): Promise<boolean> {
+    setError("");
+
     try {
-      gamesService.createGame(title, genre, description);
-      refreshGames();
-      setError("");
+      const game = await gamesService.createGame(title, genre, description);
+      setGames((current) => [...current, game]);
       return true;
-    } catch (caughtError) {
-      setError(
-        caughtError instanceof Error
-          ? caughtError.message
-          : "Unable to add the game.",
-      );
+    } catch (error) {
+      setError(errorMessage(error, "Unable to add the game."));
       return false;
     }
   }
 
-  function removeGame(id: number) {
-    gamesService.removeGame(id);
-    refreshGames();
+  async function removeGame(id: number): Promise<void> {
+    setError("");
+
+    try {
+      await gamesService.removeGame(id);
+      setGames((current) => current.filter((game) => game.id !== id));
+    } catch (error) {
+      setError(errorMessage(error, "Unable to remove the game."));
+    }
   }
 
-  return {
-    games,
-    error,
-    addGame,
-    removeGame,
-  };
+  return { games, error, addGame, removeGame };
 }

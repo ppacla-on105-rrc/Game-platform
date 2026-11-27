@@ -2,36 +2,29 @@ import type { Game } from "../types/Game";
 import { gamesRepository } from "../repositories/gamesRepository";
 
 export const gamesService = {
-  getAllGames(): Game[] {
+  getAllGames(): Promise<Game[]> {
     return gamesRepository.getAll();
   },
 
-  createGame(title: string, genre: string, description: string): Game {
-    const cleanTitle = title.trim();
-    const cleanGenre = genre.trim();
-    const cleanDescription = description.trim();
+  async createGame(
+    title: string,
+    genre: string,
+    description: string,
+  ): Promise<Game> {
+    const game = {
+      title: title.trim(),
+      genre: genre.trim(),
+      description: description.trim(),
+    };
 
-    if (!cleanTitle || !cleanGenre || !cleanDescription) {
+    if (!game.title || !game.genre || !game.description) {
       throw new Error("Please complete all fields.");
     }
 
-    const games = gamesRepository.getAll();
-    const nextId =
-      games.length === 0
-        ? 1
-        : Math.max(...games.map((game) => game.id)) + 1;
-
-    const newGame: Game = {
-      id: nextId,
-      title: cleanTitle,
-      genre: cleanGenre,
-      description: cleanDescription,
-    };
-
-    return gamesRepository.create(newGame);
+    return gamesRepository.create(game);
   },
 
-  removeGame(id: number): boolean {
+  removeGame(id: number): Promise<void> {
     return gamesRepository.delete(id);
   },
 };
