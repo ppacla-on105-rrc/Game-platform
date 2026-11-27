@@ -8,10 +8,10 @@ function Games() {
   const [genre, setGenre] = useState("");
   const [description, setDescription] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const gameWasAdded = addGame(title, genre, description);
+    const gameWasAdded = await addGame(title, genre, description);
 
     if (!gameWasAdded) {
       return;

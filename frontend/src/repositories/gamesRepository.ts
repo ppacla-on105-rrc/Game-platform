@@ -1,42 +1,51 @@
 import type { Game } from "../types/Game";
-import { initialGames } from "../data/games";
 
-let games: Game[] = [...initialGames];
+type GameInput = Omit<Game, "id">;
+
+const apiOrigin = import.meta.env.DEV ? "http://localhost:3000" : "";
+const gamesUrl = `${apiOrigin}/api/games`;
+
+async function request(path = "", options?: RequestInit): Promise<Response> {
+  const response = await fetch(`${gamesUrl}${path}`, options);
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    throw new Error(body?.message || `Games request failed (${response.status}).`);
+  }
+
+  return response;
+}
 
 export const gamesRepository = {
-  getAll(): Game[] {
-    return [...games];
+  async getAll(): Promise<Game[]> {
+    const response = await request();
+    return response.json();
   },
 
-  getById(id: number): Game | undefined {
-    return games.find((game) => game.id === id);
+  async getById(id: number): Promise<Game> {
+    const response = await request(`/${id}`);
+    return response.json();
   },
 
-  create(game: Game): Game {
-    games = [...games, game];
-    return game;
+  async create(game: GameInput): Promise<Game> {
+    const response = await request("", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(game),
+    });
+    return response.json();
   },
 
-  update(id: number, updatedGame: Game): Game | undefined {
-    const index = games.findIndex((game) => game.id === id);
-
-    if (index === -1) {
-      return undefined;
-    }
-
-    games[index] = {
-      ...updatedGame,
-      id,
-    };
-
-    return games[index];
+  async update(id: number, game: GameInput): Promise<Game> {
+    const response = await request(`/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(game),
+    });
+    return response.json();
   },
 
-  delete(id: number): boolean {
-    const originalLength = games.length;
-
-    games = games.filter((game) => game.id !== id);
-
-    return games.length < originalLength;
+  async delete(id: number): Promise<void> {
+    await request(`/${id}`, { method: "DELETE" });
   },
 };
