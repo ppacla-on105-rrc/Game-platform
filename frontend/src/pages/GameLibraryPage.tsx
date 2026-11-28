@@ -4,29 +4,41 @@ import GameLibraryForm from "../components/game-library/GameLibraryForm";
 import { useGameLibrary } from "../hooks/useGameLibrary";
 
 /**
- * GameLibraryPage displays the user's collection of games.
- *
- * It uses the useGameLibrary hook to manage the game list
- * and handle actions such as adding and removing games.
- *
- * The hook calls the service for business rules, and the
- * service uses the repository to access the test data.
- *
- * This keeps business logic and data access out of the page.
+ * Displays the Game Library page.
+ * Uses one hook to manage the form and the game list.
  */
 function GameLibraryPage() {
-  const { message, addGame } = useGameLibrary();
+  const {
+    games,
+    message,
+    error,
+    isLoading,
+    isSaving,
+    addGame,
+    removeGame,
+    updateGameStatus,
+  } = useGameLibrary();
+
   return (
     <main>
       <h1>Game Library</h1>
 
-      {message && <p>{message}</p>}
+      {message && <p role="status">{message}</p>}
+
+      {error && <p role="alert">{error}</p>}
 
       <GameLibraryForm
         onAddGame={addGame}
+        isSaving={isSaving}
       />
 
-      <GameLibrary/>
+      <GameLibrary
+        games={games}
+        isLoading={isLoading}
+        isSaving={isSaving}
+        onRemoveGame={removeGame}
+        onUpdateStatus={updateGameStatus}
+      />
     </main>
   );
 }

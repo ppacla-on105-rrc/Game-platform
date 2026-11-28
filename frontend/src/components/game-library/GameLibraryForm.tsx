@@ -1,41 +1,43 @@
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 
 interface GameLibraryFormProps {
   onAddGame: (
     title: string,
     genre: string,
     status: string
-  ) => string;
+  ) => Promise<string>;
+  isSaving: boolean;
 }
 
 /**
- * GameLibraryForm collects information for a new game.
- *
- * The component manages the input fields and displays errors.
- * It calls onAddGame, which uses the custom hook and service
- * to validate and add games through the repository.
- *
- * This keeps business logic and data access out of the form.
+ * Form for adding games to the library.
+ * Shows validation errors and a live game title preview.
  */
-function GameLibraryForm({ onAddGame }: GameLibraryFormProps) {
+function GameLibraryForm({
+  onAddGame,
+  isSaving,
+}: GameLibraryFormProps) {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [status, setStatus] = useState("Not Installed");
   const [error, setError] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
+    setError("");
 
-    // The service checks the required fields and duplicate games.
-    const result = onAddGame(title, genre, status);
+    const result = await onAddGame(title, genre, status);
 
     if (result !== "Game added successfully.") {
       setError(result);
       return;
     }
 
-    // Clear the form after a successful addition.
+    // Clear fields after successful submission.
     setTitle("");
     setGenre("");
     setStatus("Not Installed");
@@ -54,6 +56,7 @@ function GameLibraryForm({ onAddGame }: GameLibraryFormProps) {
             type="text"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
+            disabled={isSaving}
           />
         </div>
 
@@ -64,6 +67,7 @@ function GameLibraryForm({ onAddGame }: GameLibraryFormProps) {
             type="text"
             value={genre}
             onChange={(event) => setGenre(event.target.value)}
+            disabled={isSaving}
           />
         </div>
 
@@ -73,6 +77,7 @@ function GameLibraryForm({ onAddGame }: GameLibraryFormProps) {
             id="game-status"
             value={status}
             onChange={(event) => setStatus(event.target.value)}
+            disabled={isSaving}
           >
             <option value="Installed">Installed</option>
             <option value="Not Installed">Not Installed</option>
@@ -81,11 +86,14 @@ function GameLibraryForm({ onAddGame }: GameLibraryFormProps) {
 
         {error && <p role="alert">{error}</p>}
 
-        <button type="submit">Add Game</button>
+        <button type="submit" disabled={isSaving}>
+          {isSaving ? "Adding..." : "Add Game"}
+        </button>
       </form>
 
       <p>
-        Game Preview: {title === "" ? "Enter a game title" : title}
+        Game Preview:{" "}
+        {title === "" ? "Enter a game title" : title}
       </p>
     </section>
   );

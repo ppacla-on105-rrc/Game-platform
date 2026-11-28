@@ -1,71 +1,134 @@
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import { gameLibraryService } from "../services/gameLibraryService";
 import type { LibraryGame } from "../types/LibraryGame";
 
-// This hook manages the Game Library's presentation state.
-// Business rules belong in the service, not in this hook.
-//
-// Returns:
-// games - the current list of library games
-// message - feedback shown to the user
-// addGame - adds a game through the service
-// removeGame - removes a game through the service
-// updateGameStatus - updates a game's status through the service
+// Convert unknown errors into readable messages.
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
 
-let currentGames = gameLibraryService.getGames();
-const listeners = new Set<() => void>();
-
-function subscribe(listener: () => void) {
-  listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
-}
-
-function getSnapshot(): LibraryGame[] {
-  return currentGames;
-}
-
-function refreshGames() {
-  currentGames = gameLibraryService.getGames();
-  listeners.forEach((listener) => listener());
+  return "Something went wrong. Please try again.";
 }
 
 export function useGameLibrary() {
-  const games = useSyncExternalStore(subscribe, getSnapshot);
+  const [games, setGames] = useState<LibraryGame[]>([]);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
-  function addGame(title: string, genre: string, status: string) {
-    const result = gameLibraryService.addGame(title, genre, status);
-    setMessage(result);
-    if (result === "Game added successfully.") {
-      refreshGames();
+  // Load saved games when the page opens.
+  useEffect(() => {
+    let active = true;
+
+    async function loadGames() {
+      try {
+        const savedGames = await gameLibraryService.getGames();
+
+        if (active) {
+          setGames(savedGames);
+        }
+      } catch (err) {
+        if (active) {
+          setError(getErrorMessage(err));
+        }
+      } finally {
+        if (active) {
+          setIsLoading(false);
+        }
+      }
     }
-    return result;
+
+    void loadGames();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Add a new game and update the displayed list.
+  async function addGame(
+    title: string,
+    genre: string,
+    status: string
+  ): Promise<string> {
+    setIsSaving(true);
+    setError("");
+    setMessage("");
+
+    try {
+      const newGame = await gameLibraryService.addGame(
+        title,
+        genre,
+        status
+      );
+
+      setGames((current) => [...current, newGame]);
+      setMessage("Game added successfully.");
+
+      return "Game added successfully.";
+    } catch (err) {
+      return getErrorMessage(err);
+    } finally {
+      setIsSaving(false);
+    }
   }
 
-  function removeGame(id: number) {
-    const result = gameLibraryService.removeGame(id);
-    setMessage(result);
-    if (result === "Game removed successfully.") {
-      refreshGames();
+  // Remove a game and update the displayed list.
+  async function removeGame(id: number): Promise<void> {
+    setIsSaving(true);
+    setError("");
+    setMessage("");
+
+    try {
+      await gameLibraryService.removeGame(id);
+
+      setGames((current) =>
+        current.filter((game) => game.id !== id)
+      );
+
+      setMessage("Game removed successfully.");
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setIsSaving(false);
     }
-    return result;
   }
 
-  function updateGameStatus(id: number, status: string) {
-    const result = gameLibraryService.updateGameStatus(id, status);
-    setMessage(result);
-    if (result === "Game status updated successfully.") {
-      refreshGames();
+  // Change a game's installation status.
+  async function updateGameStatus(
+    id: number,
+    status: string
+  ): Promise<void> {
+    setIsSaving(true);
+    setError("");
+    setMessage("");
+
+    try {
+      await gameLibraryService.updateGameStatus(id, status);
+
+      setGames((current) =>
+        current.map((game) =>
+          game.id === id ? { ...game, status } : game
+        )
+      );
+
+      setMessage("Game status updated successfully.");
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setIsSaving(false);
     }
-    return result;
   }
 
   return {
     games,
     message,
+    error,
+    isLoading,
+    isSaving,
     addGame,
     removeGame,
     updateGameStatus,
